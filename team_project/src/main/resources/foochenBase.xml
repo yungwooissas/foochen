@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation=
+	"http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+	
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<!-- DB연동 (mysql로 수정해야함) -->
+	<!-- 정환 DB에 연결하기 위한 URL은 주석부분 아랫 부분과 교체하면 접속가능 -->
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+  	<property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+<!--   	<property name="jdbcUrl" value="jdbc:mysql://59.20.89.227:3306/TEST?useSSL=false&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC"/> -->
+  	<property name="jdbcUrl" value="jdbc:mysql://localhost/TEST?useSSL=false&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC"/>
+	<property name="user" value="dev"/>
+	<property name="password" value="1111"/>
+	<property name="maxPoolSize" value="100"/>
+	<property name="maxIdleTime" value="600"/>
+	<property name="idleConnectionTestPeriod" value="300"/>
+  </bean>
+
+	<!-- MyBatis 사용 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- (mysql로 수정해야함) -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="classpath:config/mybatis-config.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:config/sqlmap-member.xml</value>
+				<value>classpath:config/sqlmap-recipe.xml</value>
+				<value>classpath:config/sqlmap-notice.xml</value>
+				<value>classpath:config/sqlmap-talk.xml</value>
+				<value>classpath:config/sqlmap-qna.xml</value>
+				<value>classpath:config/sqlmap-rcomment.xml</value>
+				<value>classpath:config/sqlmap-tcomment.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- Dao 클래스 -->
+	<bean id="memberDao" class="dao.member.MemberDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="recipeDao" class="dao.recipe.RecipeDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="noticeDao" class="dao.notice.NoticeDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="talkDao" class="dao.talk.TalkDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="qnaDao" class="dao.qna.QnaDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="rcommentDao" class="dao.rcomment.RCommentDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="tcommentDao" class="dao.tcomment.TCommentDaoMybatis">
+		<constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+
+	<!-- 서비스 클래스 -->
+	<bean id="memberService" class="service.member.MemberServiceImpl">
+		<constructor-arg ref="memberDao" />
+	</bean>
+	<bean id="recipeService" class="service.recipe.RecipeServiceImpl">
+		<constructor-arg ref="recipeDao" />
+	</bean>
+	<bean id="noticeService" class="service.notice.NoticeServiceImpl">
+		<constructor-arg ref="noticeDao" />
+	</bean>
+	<bean id="talkService" class="service.talk.TalkServiceImpl">
+		<constructor-arg ref="talkDao" />
+	</bean>
+	<bean id="qnaService" class="service.qna.QnaServiceImpl">
+		<constructor-arg ref="qnaDao" />
+	</bean>
+	<bean id="rcommentService" class="service.rcomment.RCommentServiceImpl">
+		<constructor-arg ref="rcommentDao" />
+	</bean>
+	<bean id="tcommentService" class="service.tcomment.TCommentServiceImpl">
+		<constructor-arg ref="tcommentDao" />
+	</bean>
+
+</beans>

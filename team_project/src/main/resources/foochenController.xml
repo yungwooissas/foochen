@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/mvc
+  http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
+  	
+
+	<!-- 컨트롤러 생성 (필요한 파라미터 각각 추가) -->  	
+  	<bean class="controller.member.MemberController">
+  		<constructor-arg ref="memberService"/>
+  	</bean>
+  	<bean class="controller.notice.NoticeController">
+  		<constructor-arg ref="noticeService"/>
+  	</bean>
+  	<bean class="controller.qna.QnaController">
+  		<constructor-arg ref="qnaService"/>
+  	</bean>
+  	<!-- 댓글이 필요한 컨트롤러들 -->
+  	<bean class="controller.recipe.RecipeController">
+  		<constructor-arg index="0" ref="recipeService"/>
+  		<constructor-arg index="1" ref="rcommentService"/>
+  	</bean>
+  	<bean class="controller.talk.TalkController">
+  		<constructor-arg index="0" ref="talkService"/>
+  		<constructor-arg index="1" ref="tcommentService"/>
+  	</bean>
+
+  	<bean class="controller.etc.EtcController">
+  	<!-- 필요한 파라미터 입력 -->
+  	</bean>
+  	
+	<!-- 인터셉터 --> 	
+<!--   	<mvc:interceptors>
+  		<mvc:interceptor>
+  			<mvc:mapping path="/edit/**"/>
+  			<mvc:exclude-mapping path="/edit/help/**"/>
+  			<bean class="interceptor.AuthCheckInterceptor"/>
+  		</mvc:interceptor>
+  	</mvc:interceptors> -->
+  
+</beans>
