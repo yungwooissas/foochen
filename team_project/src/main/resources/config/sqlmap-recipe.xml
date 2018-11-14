@@ -3,5 +3,71 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="recipeDao">             
-
+	<select id="list" resultType="recipeDto">
+		SELECT * FROM boardrecipe ORDER BY RNUMBER
+	</select>
+	
+	<select id="select" parameterType="int" resultType="recipeDto">
+		SELECT * FROM boardrecipe WHERE RNUMBER = #{rNumber} 
+	</select>
+	
+	<insert id="insert" parameterType="recipeDto">
+		INSERT INTO boardrecipe(NAME,
+								RDATE,
+								RCOUNT,
+								REXPLAIN,
+								RINGREDIENT,
+								RTITLE,
+								RIMAGE,
+								RTIMER,
+								RSTEP,
+								RCATEGORY1,
+								RCATEGORY2,
+								RCATEGORY3,
+								RTHUMBNAIL,
+								EMAIL)
+		VALUES( #{NAME},
+				#{RDATE},
+				#{RCOUNT},
+				#{REXPLAIN},
+				#{RINGREDIENT},
+				#{RTITLE},
+				#{RIMAGE},
+				#{RTIMER},
+				#{RSTEP},
+				#{RCATEGORY1},
+				#{RCATEGORY2},
+				#{RCATEGORY3},
+				#{RTHUMBNAIL},
+				#{EMAIL})
+		<selectKey keyProperty="rNumber" resultType="Integer">
+			SELECT NVL(MAX(RNUMBER),0) FROM boardrecipe
+		</selectKey>
+	</insert>
+	
+	<update id="update" parameterType="recipeDto">
+		UPDATE boardrecipe SET NAME = #{NAME},
+								RDATE = #{RDATE},
+								RCOUNT = #{RCOUNT},
+								REXPLAIN = #{REXPLAIN},
+								RINGREDIENT = #{RINGREDIENT},
+								RTITLE = #{RTITLE},
+								RIMAGE = #{RIMAGE},
+								RTIMER = #{RTIMER},
+								RSTEP = #{RSTEP},
+								RCATEGORY1 = #{RCATEGORY1},
+								RCATEGORY2 = #{RCATEGORY2},
+								RCATEGORY3 = #{RCATEGORY3},
+								RTHUMBNAIL = #{RTHUMBNAIL},
+								EMAIL = #{EMAIL}
+								WHERE RNUMBER = #{rNumber};
+	</update>
+	
+	<delete id="delete" parameterType="recipeDto">
+		DELETE FROM boardrecipe WHERE RNUMBER = #{rNumber}
+	</delete>
+	
+	<delete id="deleteAll">
+		DELETE FROM boardrecipe
+	</delete>
 </mapper>
