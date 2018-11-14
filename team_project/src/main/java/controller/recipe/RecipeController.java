@@ -13,6 +13,7 @@ public class RecipeController {
 	private RCommentService rcommentService;
 	
 	public RecipeController(RecipeService recipeService, RCommentService rcommentService) {
+		super();
 		this.recipeService = recipeService;
 		this.rcommentService = rcommentService;
 	}
@@ -21,7 +22,7 @@ public class RecipeController {
 		this.recipeService = recipeService;
 	}
 	
-	@RequestMapping(value="/recipe/list")
+	@RequestMapping(value="/recipe/recipelist")
 	public String list() {
 		return recipeService.rList().toString();
 	}
