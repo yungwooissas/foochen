@@ -2,5 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="noticeDao">             
+<mapper namespace="noticeDao">
+	<select id="list" resultType="noticeDto">
+		SELECT * FROM BOARDNOTICE ORDER BY NNUMBER
+	</select>
+	
+	<select id="select" parameterType="int" resultType="noticeDto">
+		SELECT * FROM BOARDNOTICE WHERE NNUMBER = #{nNumber}
+	</select>
+	
+	<insert id="insert" parameterType="noticeDto">
+		INSERT INTO BOARDNOTICE(NTITLE, NOTICE, NAME, NDATE) VALUES(#{nTitle},#{notice},SYSDATE)
+		<selectKey keyProperty = "nNumber" resultType="Integer">
+			SELECT NVL(MAX(NNUMBER),0) FROM BOARDNOTICE
+		</selectKey>
+	</insert>
+	
+	<update id="update" parameterType="noticeDto">
+		UPDATE BOARDNOTICE SET NTITLE = #{nTitle}, NOTICE = #{notice}, NAME = #{name}, WHERE NNUMBER = #{nNumber}
+	</update>
+	
+	<delete id="delete" parameterType="noticeDto">
+		DELETE FROM BOARDNOTICE WHERE NNUMBER = #{nNumber}
+	</delete>
+	
+	<delete id="deleteAll">
+		DELETE FROM BOARDNOTICE
+	</delete>
 </mapper>

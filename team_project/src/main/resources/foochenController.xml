@@ -2,19 +2,19 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 		xmlns:mvc="http://www.springframework.org/schema/mvc"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.springframework.org/schema/beans
-  http://www.springframework.org/schema/beans/spring-beans.xsd
-  http://www.springframework.org/schema/mvc
-  http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
-  	
+ 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
+		  	
 
 	<!-- 컨트롤러 생성 (필요한 파라미터 각각 추가) -->  	
   	<bean class="controller.member.MemberController">
   		<constructor-arg ref="memberService"/>
   	</bean>
-  	<bean class="controller.notice.NoticeController">
-  		<constructor-arg ref="noticeService"/>
+  	<bean id="noticeController" class="controller.notice.NoticeController">
+  		<property name="noticeService" ref="noticeServiceImpl"/>
   	</bean>
   	<bean class="controller.qna.QnaController">
   		<constructor-arg ref="qnaService"/>
