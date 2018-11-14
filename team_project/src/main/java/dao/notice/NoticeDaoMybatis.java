@@ -12,6 +12,10 @@ public class NoticeDaoMybatis implements NoticeDao {
 	public NoticeDaoMybatis(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
+	
+	public void setSqlMapClient(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
 
 	@Override
 	public List<NoticeDto> list() {

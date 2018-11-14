@@ -11,7 +11,11 @@ import dto.notice.NoticeDto;
 public class NoticeServiceImpl implements NoticeService{
 	private NoticeDao noticeDao;
 
-	public NoticeServiceImpl(NoticeDao noticeDao) {
+	public NoticeDao getBoardDao() {
+		return noticeDao;
+	}
+	
+	public void setNoticeDao(NoticeDao noticeDao) {
 		this.noticeDao = noticeDao;
 	}
 
