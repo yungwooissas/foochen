@@ -24,7 +24,7 @@
   		<constructor-arg index="0" ref="recipeService"/>
   		<constructor-arg index="1" ref="rcommentService"/>
   	</bean>
-  	<bean class="controller.talk.TalkController">
+  	<bean id="talkController" class="controller.talk.TalkController">
   		<constructor-arg index="0" ref="talkService"/>
   		<constructor-arg index="1" ref="tcommentService"/>
   	</bean>

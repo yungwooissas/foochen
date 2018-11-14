@@ -10,6 +10,7 @@ public class TalkDto {
 	private String tImage;
 	private String talk;
 	private int tScore;
+	
 	public int gettNumber() {
 		return tNumber;
 	}
