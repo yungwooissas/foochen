@@ -105,5 +105,8 @@
 		<property name="noticeDao" ref="noticeDao"/>
 	</bean>
 	
+	<bean id="recipeServiceImpl" class="service.recipe.RecipeServiceImpl">
+		<property name="recipeDao" ref="recipeDao"/>
+	</bean>
 	
 </beans>

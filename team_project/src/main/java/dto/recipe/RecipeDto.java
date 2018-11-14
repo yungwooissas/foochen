@@ -2,6 +2,9 @@ package dto.recipe;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("RecipeDto")
 public class RecipeDto {
 	private int rNumber;
 	private String email;

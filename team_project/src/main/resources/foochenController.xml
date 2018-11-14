@@ -19,6 +19,7 @@
   	<bean class="controller.qna.QnaController">
   		<constructor-arg ref="qnaService"/>
   	</bean>
+  	
   	<!-- 댓글이 필요한 컨트롤러들 -->
   	<bean class="controller.recipe.RecipeController">
   		<constructor-arg index="0" ref="recipeService"/>
