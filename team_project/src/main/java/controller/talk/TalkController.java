@@ -12,7 +12,9 @@ public class TalkController {
 		this.talkService = talkService;
 		this.tcommentService = tcommentService;
 	}
-	
+	public static void main(String[] args) {
+		System.out.println("test");
+	}
 	
 	
 }
