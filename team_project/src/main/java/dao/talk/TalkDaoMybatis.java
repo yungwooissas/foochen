@@ -22,32 +22,32 @@ public class TalkDaoMybatis implements TalkDao {
 
 	@Override
 	public List<TalkDto> list() {
-		return sqlSessionTemplate.selectList("Tlist");
+		return sqlSessionTemplate.selectList("tList");
 	}
 
 	@Override
 	public int delete(TalkDto talkDto) {
-		return sqlSessionTemplate.delete("delete", talkDto);
+		return sqlSessionTemplate.delete("tDelete", talkDto);
 	}
 
 	@Override
 	public int deleteAll() {
-		return sqlSessionTemplate.delete("deleteAll");
+		return sqlSessionTemplate.delete("tDeleteAll");
 	}
 
 	@Override
 	public int update(TalkDto talkDto) {
-		return sqlSessionTemplate.update("update", talkDto);
+		return sqlSessionTemplate.update("tUpdate", talkDto);
 	}
 
 	@Override
 	public void insert(TalkDto talkDto) {
-		sqlSessionTemplate.insert("insert", talkDto);
+		sqlSessionTemplate.insert("tInsert", talkDto);
 	}
 
 	@Override
 	public TalkDto select(int tNumber) {
-		TalkDto td = (TalkDto) sqlSessionTemplate.selectOne("select", tNumber);
+		TalkDto td = (TalkDto) sqlSessionTemplate.selectOne("tSelect", tNumber);
 		return td;
 	}
 	

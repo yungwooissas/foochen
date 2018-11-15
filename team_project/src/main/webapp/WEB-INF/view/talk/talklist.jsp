@@ -22,7 +22,8 @@
 			<tr>
 				<td>${talkboard.tNumber}</td>
 				<td>${talkboard.name}</td>
-				<td>${talkboard.talk}</td>
+				<td><a href="<c:url value="/talk/talkdetail/${talkboard.tNumber}"/>">
+				${talkboard.talk}</a></td>
 				<c:if test="${talkboard.tImage ne null}">			
 					<td>${talkboard.tImage}</td>
 				</c:if>									
