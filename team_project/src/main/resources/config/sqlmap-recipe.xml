@@ -3,15 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="recipeDao">             
-	<select id="Rlist" resultType="recipeDto">
+	<select id="rList" resultType="recipeDto">
 		SELECT * FROM BOARDRECIPE ORDER BY RNUMBER
 	</select>
 	
-	<select id="Rselect" parameterType="int" resultType="recipeDto">
+	<select id="rSelect" parameterType="int" resultType="recipeDto">
 		SELECT * FROM BOARDRECIPE WHERE RNUMBER = #{rNumber} 
 	</select>
 	
-	<insert id="Rinsert" parameterType="recipeDto">
+	<insert id="rInsert" parameterType="recipeDto">
 		INSERT INTO BOARDRECIPE(NAME,
 								RDATE,
 								RCOUNT,
@@ -45,7 +45,7 @@
 		</selectKey>
 	</insert>
 	
-	<update id="Rupdate" parameterType="recipeDto">
+	<update id="rUpdate" parameterType="recipeDto">
 		UPDATE BOARDRECIPE SET NAME = #{NAME},
 								RDATE = #{RDATE},
 								RCOUNT = #{RCOUNT},
@@ -62,12 +62,15 @@
 								EMAIL = #{EMAIL}
 								WHERE RNUMBER = #{rNumber};
 	</update>
-	
-	<delete id="Rdelete" parameterType="recipeDto">
+				
+	<update id="rUpdateCount" parameterType="int">
+		UPDATE BOARDRECIPE SET RCOUNT = RCOUNT + 1 WHERE RNUMBER = #{rNumber}
+	</update>
+	<delete id="rDelete" parameterType="recipeDto">
 		DELETE FROM BOARDRECIPE WHERE RNUMBER = #{rNumber}
 	</delete>
 	
-	<delete id="RdeleteAll">
+	<delete id="rDeleteAll">
 		DELETE FROM BOARDRECIPE
 	</delete>
 </mapper>

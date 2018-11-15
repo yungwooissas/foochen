@@ -21,7 +21,8 @@
 		<c:forEach var="recipeboard" items="${recipeList}" varStatus="loop">
 			<tr>
 				<td>${recipeboard.rNumber}</td>
-				<td>${recipeboard.rTitle}</td>
+				<td><a href="<c:url value="/recipe/read/${recipeboard.rNumber}"/>">
+						${recipeboard.rTitle}</a></td>
 				<td>${recipeboard.name}</td>
 				<td>${recipeboard.rExplain}</td>
 				<td>${recipeboard.rImage}</td>
@@ -30,7 +31,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<a href="<c:url value="/recipe/recipewrite" />">새글</a>
+	<a href="<c:url value="/recipe/write" />">새글</a>
 
 </body>
 </html>

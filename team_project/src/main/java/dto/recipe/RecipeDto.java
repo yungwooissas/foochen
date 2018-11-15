@@ -6,12 +6,10 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("RecipeDto")
 public class RecipeDto {
-	private int rNumber;
-	private String email;
+	
 	private String name;
 	private Date rDate;
 	private int rCount;
-	private float rScore;
 	private String rExplain;
 	private String rIngredient;
 	private String rTitle;
@@ -22,19 +20,10 @@ public class RecipeDto {
 	private String rCategori2;
 	private String rCategori3;
 	private String rThumbnail;
+	private String email;
+	private int rNumber;
 	
-	public int getrNumber() {
-		return rNumber;
-	}
-	public void setrNumber(int rNumber) {
-		this.rNumber = rNumber;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	public RecipeDto() {}
 	public String getName() {
 		return name;
 	}
@@ -52,12 +41,6 @@ public class RecipeDto {
 	}
 	public void setrCount(int rCount) {
 		this.rCount = rCount;
-	}
-	public float getrScore() {
-		return rScore;
-	}
-	public void setrScore(float rScore) {
-		this.rScore = rScore;
 	}
 	public String getrExplain() {
 		return rExplain;
@@ -95,7 +78,6 @@ public class RecipeDto {
 	public void setrStep(String rStep) {
 		this.rStep = rStep;
 	}
-
 	public String getrCategori1() {
 		return rCategori1;
 	}
@@ -120,5 +102,19 @@ public class RecipeDto {
 	public void setrThumbnail(String rThumbnail) {
 		this.rThumbnail = rThumbnail;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public int getrNumber() {
+		return rNumber;
+	}
+	public void setrNumber(int rNumber) {
+		this.rNumber = rNumber;
+	}
+	
+	
 	
 }
