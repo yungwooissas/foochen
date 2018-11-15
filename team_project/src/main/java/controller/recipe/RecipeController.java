@@ -1,6 +1,7 @@
 package controller.recipe;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,8 +24,9 @@ public class RecipeController {
 	}
 	
 	@RequestMapping(value="/recipe/recipelist")
-	public String list() {
-		return recipeService.rList().toString();
+	public String list(Model model) {
+		model.addAttribute("recipeList", recipeService.rList());
+		return "/recipe/list";
 	}
 	
 }

@@ -3,16 +3,16 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="recipeDao">             
-	<select id="list" resultType="recipeDto">
-		SELECT * FROM boardrecipe ORDER BY RNUMBER
+	<select id="Rlist" resultType="recipeDto">
+		SELECT * FROM BOARDRECIPE ORDER BY RNUMBER
 	</select>
 	
-	<select id="select" parameterType="int" resultType="recipeDto">
-		SELECT * FROM boardrecipe WHERE RNUMBER = #{rNumber} 
+	<select id="Rselect" parameterType="int" resultType="recipeDto">
+		SELECT * FROM BOARDRECIPE WHERE RNUMBER = #{rNumber} 
 	</select>
 	
-	<insert id="insert" parameterType="recipeDto">
-		INSERT INTO boardrecipe(NAME,
+	<insert id="Rinsert" parameterType="recipeDto">
+		INSERT INTO BOARDRECIPE(NAME,
 								RDATE,
 								RCOUNT,
 								REXPLAIN,
@@ -41,12 +41,12 @@
 				#{RTHUMBNAIL},
 				#{EMAIL})
 		<selectKey keyProperty="rNumber" resultType="Integer">
-			SELECT NVL(MAX(RNUMBER),0) FROM boardrecipe
+			SELECT NVL(MAX(RNUMBER),0) FROM BOARDRECIPE
 		</selectKey>
 	</insert>
 	
-	<update id="update" parameterType="recipeDto">
-		UPDATE boardrecipe SET NAME = #{NAME},
+	<update id="Rupdate" parameterType="recipeDto">
+		UPDATE BOARDRECIPE SET NAME = #{NAME},
 								RDATE = #{RDATE},
 								RCOUNT = #{RCOUNT},
 								REXPLAIN = #{REXPLAIN},
@@ -63,11 +63,11 @@
 								WHERE RNUMBER = #{rNumber};
 	</update>
 	
-	<delete id="delete" parameterType="recipeDto">
-		DELETE FROM boardrecipe WHERE RNUMBER = #{rNumber}
+	<delete id="Rdelete" parameterType="recipeDto">
+		DELETE FROM BOARDRECIPE WHERE RNUMBER = #{rNumber}
 	</delete>
 	
-	<delete id="deleteAll">
-		DELETE FROM boardrecipe
+	<delete id="RdeleteAll">
+		DELETE FROM BOARDRECIPE
 	</delete>
 </mapper>

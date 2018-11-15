@@ -21,38 +21,38 @@ public class RecipeDaoMybatis implements RecipeDao {
 
 	@Override
 	public List<RecipeDto> rList() {
-		return sqlSessionTemplate.selectList("list");
+		return sqlSessionTemplate.selectList("Rlist");
 	}
 
 	@Override
 	public int delete(RecipeDto recipeDto) {
-		return sqlSessionTemplate.delete("delete", recipeDto);
+		return sqlSessionTemplate.delete("Rdelete", recipeDto);
 	}
 
 	@Override
 	public int deleteAll() {
-		return sqlSessionTemplate.delete("deleteAll");
+		return sqlSessionTemplate.delete("RdeleteAll");
 	}
 
 	@Override
 	public int update(RecipeDto recipeDto) {
-		return sqlSessionTemplate.update("update", recipeDto);
+		return sqlSessionTemplate.update("Rupdate", recipeDto);
 	}
 
 	@Override
 	public void insert(RecipeDto recipeDto) {
-		sqlSessionTemplate.insert("insert", recipeDto);
+		sqlSessionTemplate.insert("Rinsert", recipeDto);
 		
 	}
 
 	@Override
 	public int updateReadCount(int rNumber) {
-		return sqlSessionTemplate.update("updateCount", rNumber);
+		return sqlSessionTemplate.update("RupdateCount", rNumber);
 	}
 
 	@Override
 	public RecipeDto select(int rNumber) {
-		RecipeDto dto = (RecipeDto) sqlSessionTemplate.selectOne("select", rNumber);
+		RecipeDto dto = (RecipeDto) sqlSessionTemplate.selectOne("Rselect", rNumber);
 		return dto;
 	}
 	
