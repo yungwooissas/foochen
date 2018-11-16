@@ -14,22 +14,15 @@
 			<tr>
 				<th><form:label path="nTitle">제목</form:label></th>
 				<td><form:input path="nTitle"/>
-				<form:errors path="nTitle"/></td>
 			</tr>
 			<tr>
 				<th><form:label path="notice">내용</form:label></th>
 				<td><form:input path="notice"/>
-				<form:errors path="noice"/></td>
 			</tr>
 			<tr>
 				<th><form:label path="name">작성자</form:label></th>
-				<td><form:input path="name"/>
-				<form:errors path="name"/></td>
+				<td><form:label path="name">${noticeDto.name}</form:label>
 			</tr>
-			<%-- <tr>
-				<th><form:label path="password">비밀번호</form:label></th>
-				<td><input type="password" id="pwd" name="pwd"/> ${msg }</td>
-			</tr> --%>
 		</table>
 		<div>
 			<input type="submit" value="등록">

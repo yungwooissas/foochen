@@ -14,17 +14,17 @@
 			<tr>
 				<th><form:label path="nTitle">제목</form:label></th>
 				<td><form:input path="nTitle"/>
-				<form:errors path="nTitle"/></td>
+		<%-- 		<form:errors path="nTitle"/></td> --%>
 			</tr>
 			<tr>
 				<th><form:label path="notice">내용</form:label></th>
 				<td><form:input path="notice"/>
-				<form:errors path="notice"/></td>
+			<%-- 	<form:errors path="notice"/></td> --%>
 			</tr>
 			<tr>
 				<th><form:label path="name">작성자</form:label></th>
 				<td><form:input path="name"/>
-				<form:errors path="name"/></td>
+				<%-- <form:errors path="name"/></td> --%>
 			</tr>
 			<%-- <tr>
 				<th><form:label path="password">비밀번호</form:label></th>
