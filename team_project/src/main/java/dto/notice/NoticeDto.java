@@ -1,6 +1,5 @@
 package dto.notice;
 
-import java.security.Timestamp;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
