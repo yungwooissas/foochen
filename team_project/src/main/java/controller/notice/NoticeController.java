@@ -43,7 +43,6 @@ public class NoticeController {
 		int endRow = startRow -pageSize + 1;
 		
 		List<NoticeDto> noticeList = null;
-		List<NoticeDto> noticeList2 = null;
 		if(count > 0) {
 			noticeList = noticeService.list(startRow, endRow);
 		} else {

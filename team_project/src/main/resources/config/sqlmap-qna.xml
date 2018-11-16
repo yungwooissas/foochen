@@ -2,6 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="qnaDao">             
-
+<mapper namespace="qnaDao">      
+       
+	<select id="qCount" resultType="Integer">
+		SELECT COUNT(*) FROM BOARDQNA
+	</select>
+	
+	<select id="qList" parameterType="java.util.Map" resultType="qnaDto">
+		<![CDATA[SELECT rowNotice.* FROM (SELECT @rownum:=@rownum+1 as rnum, NNUMBER, NTITLE, NOTICE, NAME, NDATE FROM BOARDQNA as rawData, (SELECT @rownum:=0) as r) as rowNotice WHERE RNUM>=#{end} AND RNUM<=#{start} ORDER BY NNUMBER DESC]]>
+	</select>
+	
+	<select id="qSelect" parameterType="int" resultType="qnaDto">
+		SELECT * FROM BOARDQNA WHERE NNUMBER = #{nNumber}
+	</select>
+	
+	<insert id="qInsert" parameterType="qnaDto">
+		INSERT INTO BOARDQNA(NTITLE, NOTICE, NAME, NDATE) VALUES(#{nTitle},#{qna},#{name},now())
+		<selectKey keyProperty = "nNumber" resultType="Integer">
+			SELECT IFNULL(MAX(NNUMBER),0) FROM BOARDQNA
+		</selectKey>
+	</insert>
+	
+	<update id="qUpdate" parameterType="qnaDto">
+		UPDATE BOARDQNA SET NTITLE = #{nTitle}, NOTICE = #{qna}, NAME = #{name} WHERE NNUMBER = #{nNumber}
+	</update>
+	
+	<delete id="qDelete" parameterType="qnaDto">
+		DELETE FROM BOARDQNA WHERE NNUMBER = #{nNumber}
+	</delete>
+	
+<!-- 	<delete id="nDeleteAll">
+		DELETE FROM BOARDQNA
+	</delete> -->
+	
 </mapper>
