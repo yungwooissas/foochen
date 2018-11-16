@@ -20,8 +20,8 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public List<NoticeDto> list() {
-		return noticeDao.list();
+	public List<NoticeDto> list(int start, int end) {
+		return noticeDao.list(start, end);
 	}
 
 	@Override
@@ -41,8 +41,12 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public NoticeDto read(int nNumber) {
-		noticeDao.updateReadCount(nNumber);
 		return noticeDao.select(nNumber);
+	}
+
+	@Override
+	public int count() {
+		return noticeDao.count();
 	}
 	
 }

@@ -1,6 +1,7 @@
 package dto.notice;
 
 import java.security.Timestamp;
+import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
@@ -10,7 +11,7 @@ public class NoticeDto {
 	private String nTitle;
 	private String notice;
 	private String name;
-	private Timestamp nDate;
+	private Date nDate;
 	
 	public NoticeDto() {}
 	
@@ -54,11 +55,11 @@ public class NoticeDto {
 		this.name = name;
 	}
 
-	public Timestamp getnDate() {
+	public Date getnDate() {
 		return nDate;
 	}
 
-	public void setnDate(Timestamp nDate) {
+	public void setnDate(Date nDate) {
 		this.nDate = nDate;
 	}
 	

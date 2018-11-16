@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,18 +24,16 @@
 		</tr>
 		<tr>
 			<th>작성일</th>
-			<td>${notice.nDate }</td>
+			<td><fmt:formatDate value="${noticeDto.nDate }" pattern="yyyy.MM.dd"/></td>
 		</tr>
-<%-- 		<tr>
-			<th>조회수</th>
-			<td>${notice.cnt }</td>
-		</tr> --%>
 	</table>
 	<div>
-		<a href="<c:url value="/notice/edit/${notice.nNumber }"/>">수정</a>
-		<a href="<c:url value="/notice/delete/${notice.nNumber }"/>">삭제</a>
-		<a href="<c:url value="/notice/list"/>">목록</a>
+		<c:if test="${approval =='approval' }">
+			<a href="<c:url value="/notice/edit/${noticeDto.nNumber }"/>">수정</a>
+			<a href="<c:url value="/notice/delete/${noticeDto.nNumber }"/>">삭제</a>
+		</c:if>
+			<a href="<c:url value="/notice/list"/>">목록</a>
 	</div>
-
+	
 </body>
 </html>

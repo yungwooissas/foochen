@@ -3,30 +3,36 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="noticeDao">
-	<select id="list" resultType="noticeDto">
-		SELECT * FROM BOARDNOTICE ORDER BY NNUMBER
+
+	<select id="nCount" resultType="Integer">
+		SELECT COUNT(*) FROM BOARDNOTICE
 	</select>
 	
-	<select id="select" parameterType="int" resultType="noticeDto">
+	<select id="nList" parameterType="java.util.Map" resultType="noticeDto">
+		<![CDATA[SELECT rowNotice.* FROM (SELECT @rownum:=@rownum+1 as rnum, NNUMBER, NTITLE, NOTICE, NAME, NDATE FROM BOARDNOTICE as rawData, (SELECT @rownum:=0) as r) as rowNotice WHERE RNUM>=#{end} AND RNUM<=#{start} ORDER BY NNUMBER DESC]]>
+	</select>
+	
+	<select id="nSelect" parameterType="int" resultType="noticeDto">
 		SELECT * FROM BOARDNOTICE WHERE NNUMBER = #{nNumber}
 	</select>
 	
-	<insert id="insert" parameterType="noticeDto">
-		INSERT INTO BOARDNOTICE(NTITLE, NOTICE, NAME, NDATE) VALUES(#{nTitle},#{notice},SYSDATE)
+	<insert id="nInsert" parameterType="noticeDto">
+		INSERT INTO BOARDNOTICE(NTITLE, NOTICE, NAME, NDATE) VALUES(#{nTitle},#{notice},#{name},now())
 		<selectKey keyProperty = "nNumber" resultType="Integer">
-			SELECT NVL(MAX(NNUMBER),0) FROM BOARDNOTICE
+			SELECT IFNULL(MAX(NNUMBER),0) FROM BOARDNOTICE
 		</selectKey>
 	</insert>
 	
-	<update id="update" parameterType="noticeDto">
-		UPDATE BOARDNOTICE SET NTITLE = #{nTitle}, NOTICE = #{notice}, NAME = #{name}, WHERE NNUMBER = #{nNumber}
+	<update id="nUpdate" parameterType="noticeDto">
+		UPDATE BOARDNOTICE SET NTITLE = #{nTitle}, NOTICE = #{notice}, NAME = #{name} WHERE NNUMBER = #{nNumber}
 	</update>
 	
-	<delete id="delete" parameterType="noticeDto">
+	<delete id="nDelete" parameterType="noticeDto">
 		DELETE FROM BOARDNOTICE WHERE NNUMBER = #{nNumber}
 	</delete>
 	
-	<delete id="deleteAll">
+<!-- 	<delete id="nDeleteAll">
 		DELETE FROM BOARDNOTICE
-	</delete>
+	</delete> -->
+	
 </mapper>

@@ -1,5 +1,9 @@
 package controller.notice;
 
+import java.util.Collections;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -9,8 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import dto.notice.NoticeDto;
 import service.notice.NoticeService;
@@ -25,13 +29,42 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/notice/list")
-	public String list(Model model) {
-		model.addAttribute("noticeList", noticeService.list());
+	public String list(Model model, @RequestParam(value="pageNum", defaultValue="1") String pageNum, HttpSession session) {
+//		세션 아이디 검색부분!!!!!!!!	
+		session.setAttribute("ID", "admin");
+		String ID = (String)session.getAttribute("ID");
+		if(ID.equals("admin")) {
+			model.addAttribute("approval", "approval");
+		}
+		int count = noticeService.count();
+		int pageSize = 5;
+		int currentPage = Integer.parseInt(pageNum);
+		int startRow = count - (currentPage-1) * pageSize;
+		int endRow = startRow -pageSize + 1;
+		
+		List<NoticeDto> noticeList = null;
+		List<NoticeDto> noticeList2 = null;
+		if(count > 0) {
+			noticeList = noticeService.list(startRow, endRow);
+		} else {
+			noticeList = Collections.emptyList();
+		}
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("count", count);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("pageNum",pageNum);
 		return "/notice/list";
 	}
 	
 	@RequestMapping(value="/notice/read/{nNumber}")
-	public String read(Model model, @PathVariable int nNumber) {
+	public String read(Model model, @PathVariable int nNumber, HttpSession session) {
+//		세션 아이디 검색부분!!!!!!!!	
+		session.setAttribute("ID", "admin");
+		String ID = (String)session.getAttribute("ID");
+		if(ID.equals("admin")) {
+			model.addAttribute("approval", "approval");
+		}
 		model.addAttribute("noticeDto", noticeService.read(nNumber));
 		return "/notice/read";
 	}
@@ -43,12 +76,21 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/notice/write", method=RequestMethod.POST)
-	public String write(@Valid NoticeDto noticeDto, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
-			return "/notice/write";
+	public String write(@Valid NoticeDto noticeDto, BindingResult bindingResult, HttpSession session, Model model) {
+//		세션 아이디 검색부분!!!!!!!!		
+		session.setAttribute("ID", "k");
+		String ID =(String)session.getAttribute("ID");
+		if(ID.equals("admin")) {
+			if(bindingResult.hasErrors()) {
+				return "/notice/write";
+			}
+			noticeService.write(noticeDto);
+			return "redirect:/notice/list";
+		} else {
+			model.addAttribute("msg", "관리자만 작성할 수 있습니다.");
+			return "redirect:/notice/list";
 		}
-		noticeService.write(noticeDto);
-		return "redirect:/notice/write";
+		
 	}
 	
 	@RequestMapping(value="/notice/edit/{nNumber}", method=RequestMethod.GET)
@@ -59,44 +101,44 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/notice/edit/{nNumber}", method=RequestMethod.POST)
-	public String edit(@Valid @ModelAttribute NoticeDto noticeDto, BindingResult result, int pwd, SessionStatus sessionStatus, Model model) {
+	public String edit(@ModelAttribute NoticeDto noticeDto, BindingResult result, HttpSession session, Model model) {
+//		세션 아이디 검색부분!!!!!!!!
+		session.setAttribute("ID", "admin");
+		String ID =(String)session.getAttribute("ID");
+		if(ID.equals("admin")) {
 		if(result.hasErrors()) {
 			return "/notice/edit";
 		} 
-//		관리자만 edit가능하게 수정
-//			else {
-//			if(noticeDto.getPassword() == pwd) {
-//				noticeService.edit(noticeDto);
-//				sessionStatus.setComplete();
-//				return "redirect:/boardnotice/list";
-//			}
-//		}
-//		model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
-		return "/notice/edit";
+		else {
+				noticeService.edit(noticeDto);
+				return "redirect:/notice/list";
+			}
+		} else {
+			model.addAttribute("msg", "관리자만 편집할 수 있습니다.");
+			return "redirect:/notice/list";
+		}
 	}
 	
-	@RequestMapping(value="/notice/delete/{seq}", method=RequestMethod.GET)
+	@RequestMapping(value="/notice/delete/{nNumber}", method=RequestMethod.GET)
 	public String delete(@PathVariable int nNumber, Model model) {
 		model.addAttribute("nNumber", nNumber);
 		return "/notice/delete";
 	}
 	
 	@RequestMapping(value="/notice/delete", method=RequestMethod.POST)
-	public String delete(int nNumber, int pwd, Model model) {
-		int rowCount;
-		NoticeDto noticeDto = new NoticeDto();
-//		noticeDto.setSeq(seq);
-//		noticeDto.setPassword(pwd); 
-// 사용자 확인 부분!!!
-		
-		rowCount = noticeService.delete(noticeDto);
-		//관리자만 삭제 추가
-		if(rowCount == 0) {
-			model.addAttribute("nNumber", nNumber);
-			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
-			return "/notice/delete";
-		} else {
+	public String delete(int nNumber, String email, Model model, HttpSession session) {
+//		세션 아이디 검색부분!!!!!!!!
+		session.setAttribute("ID", "admin");
+		String ID =(String)session.getAttribute("ID");
+		if(ID.equals("admin")) {
+			NoticeDto noticeDto = new NoticeDto();
+			noticeDto.setnNumber(nNumber);
+			noticeService.delete(noticeDto);
 			return "redirect:/notice/list";
+		} else {
+		model.addAttribute("nNumber", nNumber);
+		model.addAttribute("msg", "관리자만 삭제할 수 있습니다.");
+		return "/notice/delete";
 		}
 	}
 }
