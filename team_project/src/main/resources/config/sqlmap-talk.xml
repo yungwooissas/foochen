@@ -3,5 +3,34 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="talkDao">             
-
+	<select id="tList" resultType="talkDto">
+		SELECT * FROM boardtalk ORDER BY TNUMBER DESC
+	</select>
+	
+	<select id="tSelect" parameterType="int" resultType="talkDto">
+		SELECT * FROM boardtalk WHERE TNUMBER = #{tNumber}
+	</select>
+	
+	<insert id="tInsert" parameterType="talkDto">
+		INSERT INTO boardtalk
+		(NAME, EMAIL, TIMAGE, TALK, TDATE)
+		VALUES
+		(#{name}, #{email}, #{tImage}, #{talk}, #{tDate})
+		<selectKey keyProperty="TNUMBER" resultType="Integer">
+			SELECT IFNULL(MAX(tNumber),0) FROM boardtalk		
+		</selectKey>
+	</insert>
+	
+	<update id="tUpdate" parameterType="talkDto">
+		UPDATE boardtalk SET TIMAGE = #{tImage}, TALK = #{talk}, WHERE TNUMBER = #{tNumber}
+	</update>
+	
+	<delete id="tDelete" parameterType="talkDto">
+		DELETE FROM boardtalk WHERE TNUMBER = #{tNumber}
+	</delete>
+	
+	<delete id="tDeleteAll">
+		DELETE FROM boardtalk
+	</delete>
+	
 </mapper>

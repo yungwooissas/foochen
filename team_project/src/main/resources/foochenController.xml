@@ -19,12 +19,13 @@
   	<bean class="controller.qna.QnaController">
   		<constructor-arg ref="qnaService"/>
   	</bean>
+  	
   	<!-- 댓글이 필요한 컨트롤러들 -->
   	<bean class="controller.recipe.RecipeController">
   		<constructor-arg index="0" ref="recipeService"/>
   		<constructor-arg index="1" ref="rcommentService"/>
   	</bean>
-  	<bean class="controller.talk.TalkController">
+  	<bean id="talkController" class="controller.talk.TalkController">
   		<constructor-arg index="0" ref="talkService"/>
   		<constructor-arg index="1" ref="tcommentService"/>
   	</bean>

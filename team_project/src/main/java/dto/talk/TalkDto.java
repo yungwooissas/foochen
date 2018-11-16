@@ -2,14 +2,22 @@ package dto.talk;
 
 import java.sql.Timestamp;
 
+import org.apache.ibatis.type.Alias;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class TalkDto {
 	private int tNumber;
 	private String email;
 	private String name;
 	private Timestamp tDate;
+	@NotEmpty(message="이미지를 넣어주세요.")
 	private String tImage;
+	@NotEmpty(message="내용을 입력하세요.")
 	private String talk;
 	private int tScore;
+	
+	public TalkDto() {}
+	
 	public int gettNumber() {
 		return tNumber;
 	}
