@@ -16,17 +16,17 @@
 		(NAME, EMAIL, TIMAGE, TALK, TDATE)
 		VALUES
 		(#{name}, #{email}, #{tImage}, #{talk}, #{tDate})
-		<selectKey keyProperty="TNUMBER" resultType="Integer">
+		<selectKey keyProperty="tNumber" resultType="Integer">
 			SELECT IFNULL(MAX(tNumber),0) FROM boardtalk		
 		</selectKey>
 	</insert>
 	
 	<update id="tUpdate" parameterType="talkDto">
-		UPDATE boardtalk SET TIMAGE = #{tImage}, TALK = #{talk}, WHERE TNUMBER = #{tNumber}
+		UPDATE boardtalk SET TIMAGE = #{tImage}, TALK = #{talk} WHERE TNUMBER = #{tNumber}
 	</update>
 	
 	<delete id="tDelete" parameterType="talkDto">
-		DELETE FROM boardtalk WHERE TNUMBER = #{tNumber}
+		DELETE FROM boardtalk WHERE +TNUMBER = #{tNumber}
 	</delete>
 	
 	<delete id="tDeleteAll">
