@@ -19,6 +19,22 @@ public class MemberDto {
 	//private String recent;
 	//private String fork;
 	
+	public MemberDto() {}
+	
+	public MemberDto(String email, String password, String name, String phone, int gender,
+			String birth, String like1, String like2, String like3,Date joinDate) { // 제외] mNumber, grade, point
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.phone = phone;
+		this.gender = gender;
+		this.birth = birth;
+		this.like1 = like1;
+		this.like2 = like2;
+		this.like3 = like3;		
+		this.joinDate = joinDate;
+	}
+	
 	public int getmNumber() {
 		return mNumber;
 	}
@@ -97,6 +113,9 @@ public class MemberDto {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	
+	//이거 추가했또
+	public boolean matchPassword(String password) {
+		return this.password.equals(password);
+	}
 	
 }
