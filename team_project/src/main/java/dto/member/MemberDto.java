@@ -98,5 +98,10 @@ public class MemberDto {
 		this.point = point;
 	}
 	
+	//이거 추가했또
+	public boolean matchPassword(String password) {
+		return this.password.equals(password);
+	}
+	
 	
 }

@@ -4,4 +4,19 @@
 
 <mapper namespace="memberDao">             
 
+	<!-- 로그인 할 때 -->
+	<select id="selectByEmail" parameterType="String" resultType="memberDto">
+		SELECT * FROM member WHERE email=#{email}
+	</select> 
+	
+	<!-- id찾기 할 때 -->
+	<select id="selectByPhone" parameterType="String" resultType="memberDto">
+		SELECT * FROM member WHERE phone=#{phone}
+	</select> 
+	
+	<!-- 탈퇴 할 때 -->
+	<delete id="deleteMember" parameterType="memberDto">
+		DELETE FROM member WHERE email=#{email}
+	</delete>     
+
 </mapper>
